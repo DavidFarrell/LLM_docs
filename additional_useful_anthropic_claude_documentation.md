@@ -1,6 +1,6 @@
-# Suggested Additional Documentation for Claude Development
+# Additional Useful Anthropic and Claude Documentation
 
-This document provides curated recommendations for additional Anthropic documentation that would be valuable for building software using Claude's APIs and SDKs.
+This document provides curated recommendations for useful Anthropic and Claude documentation that would be valuable for building software using Claude's APIs and SDKs.
 
 ---
 
