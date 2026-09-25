@@ -1,0 +1,6 @@
+build/
+media/
+output/
+assets/paper/
+__pycache__/
+*.pyc
