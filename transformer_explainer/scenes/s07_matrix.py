@@ -51,11 +51,26 @@ class S07_Matrix(TScene):
 
         # ---- b1: stack queries into Q, keys into K, values into V
         with self.vo("b1") as b:
-            b.wait_until("stack", lead=0.3)
             rows = [VGroup(*Qm[4 * r:4 * r + 4]) for r in range(n)]
-            self.play(LaggedStart(*[FadeIn(r, shift=RIGHT * 0.6) for r in rows], lag_ratio=0.1),
-                      LaggedStart(*[FadeIn(l, shift=RIGHT * 0.2) for l in rl], lag_ratio=0.1),
-                      FadeIn(Ql), run_time=1.3)
+            yc = Qm.get_center()[1]
+            targets = [r.get_center() for r in rows]
+            for r in rows:
+                r.shift(LEFT * 0.6)
+                for k, cell_ in enumerate(r):
+                    cell_.shift(LEFT * 0.06 * (3 - k))
+            qlab = txt("each word's query", 22, Q_C).next_to(VGroup(*rows), UP, buff=0.3).align_to(VGroup(*rows), LEFT)
+            self.play(LaggedStart(*[FadeIn(l, shift=RIGHT * 0.2) for l in rl], lag_ratio=0.08),
+                      LaggedStart(*[FadeIn(r, shift=RIGHT * 0.2) for r in rows], lag_ratio=0.08),
+                      FadeIn(qlab), run_time=1.3)
+            b.wait_until("stack", lead=0.3)
+            self.sfx("swish", -12)
+            finals = []
+            for r, tg in zip(rows, targets):
+                fr = r.copy()
+                fr.arrange(RIGHT, buff=gap).move_to(tg)
+                finals.append(fr)
+            self.play(LaggedStart(*[Transform(r, fr) for r, fr in zip(rows, finals)], lag_ratio=0.08),
+                      FadeOut(qlab), FadeIn(Ql), run_time=1.3)
             self.sfx("click", -12)
             b.wait_until("kv", lead=0.2)
             self.play(LaggedStart(*[FadeIn(VGroup(*Km[4 * r:4 * r + 4]), shift=LEFT * 0.4) for r in range(n)],

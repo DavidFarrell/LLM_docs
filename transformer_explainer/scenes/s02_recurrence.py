@@ -145,21 +145,21 @@ class S02_Recurrence(TScene):
             key = attn_arc(chips[7], chips[ANIMAL], 0.9, Q_C, angle=0.7 * PI)
             kg = glow(key, Q_C, layers=5, width=20, opacity=0.25)
             one = txt("1 step", 26, Q_C, weight="SEMIBOLD").next_to(key, UP, buff=0.12)
-            path_t = VGroup(txt("longest path between words", 24, INK2),
-                            MathTex(r"O(n)\;\rightarrow\;O(1)", font_size=42, color=INK)).arrange(RIGHT, buff=0.3)
-            path_t.next_to(chips, DOWN, buff=0.5)
+            path_t = VGroup(txt("longest path between two words", 22, INK2),
+                            MathTex(r"O(n)\;\rightarrow\;O(1)", font_size=40, color=INK)).arrange(DOWN, buff=0.12)
+            path_t.next_to(chips, DOWN, buff=0.45)
             self.sfx("chime_soft", -8)
             self.play(web.animate.set_stroke(opacity=0.12), Create(key), FadeIn(kg), FadeIn(one),
                       chips[7].box.animate.set_stroke(Q_C, 2.6), chips[ANIMAL].box.animate.set_stroke(K_C, 2.6),
                       FadeIn(path_t, shift=UP * 0.1), run_time=0.8)
             b.wait_until("par", lead=0.1)
-            seq_t = VGroup(txt("sequential steps", 24, INK2),
-                           MathTex(r"O(n)\;\rightarrow\;O(1)", font_size=42, color=INK)).arrange(RIGHT, buff=0.3)
+            seq_t = VGroup(txt("sequential steps", 22, INK2),
+                           MathTex(r"O(n)\;\rightarrow\;O(1)", font_size=40, color=INK)).arrange(DOWN, buff=0.12)
             seq_t.next_to(gpu, DOWN, buff=0.35)
             self.sfx("power_up", -8)
             self.play(LaggedStart(*[c.animate.set_fill(HEADS[k % 8], 1) for k, c in enumerate(gpu)], lag_ratio=0.004),
                       FadeOut(idle), FadeIn(seq_t, shift=UP * 0.1), run_time=0.9)
-            tag = txt("paper, Table 1", 18, INK3).next_to(seq_t, DOWN, buff=0.15)
+            tag = txt("from the paper's Table 1", 18, INK3).next_to(seq_t, DOWN, buff=0.15)
             self.play(FadeIn(tag), run_time=0.3)
         self.wait(0.6)
         self.sfx("whoosh", -9)

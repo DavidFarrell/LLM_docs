@@ -22,6 +22,6 @@ ffmpeg -v warning -stats -y \
   -c:v libx264 -preset slow -crf "$CRF" -tune animation -profile:v high -pix_fmt yuv420p -g 120 \
   -c:a aac -b:a 256k -ar 48000 \
   -c:s mov_text -metadata:s:s:0 language=eng -disposition:s:0 0 \
-  -movflags +faststart -shortest "$OUT"
+  -movflags +faststart "$OUT"
 cp build/subtitles.srt output/attention_is_all_you_need_explained.srt
 ls -la output/
