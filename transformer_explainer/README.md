@@ -45,7 +45,8 @@ music.py         procedural ambient bed (D major pads, sub, plucked arpeggio)
 mix.py           places narration + cues at their logged frame times, ducks music,
                  normalises to -16 LUFS, writes subtitles
 particles.py     subtle drifting dust layer, screen-blended in post
-assemble.sh      concat scenes, blend, mux audio + soft subtitles -> output/*.mp4
+assemble.sh      concat scenes, blend, mux audio + soft subtitles + chapters -> output/*.mp4
+share_encode.sh  smaller 720p copy for upload limits
 ```
 
 Audio sync is frame-accurate: every narration clip and sound cue is logged with
@@ -66,8 +67,12 @@ python prep_assets.py path/to/1706.03762v7.pdf   # crops the paper's figures
 /opt/venv/bin/python tts.py --speed 1.05          # narration
 /opt/venv/bin/python sfx.py                       # sound effects
 ./render_all.sh h 4                               # 1080p60 scenes, 4 in parallel
-./assemble.sh                                     # final MP4 in output/
+./assemble.sh                                     # 1080p60 master in output/ (~140 MB)
+./share_encode.sh                                 # two-pass 720p30 copy under 30 MiB for sharing
 ```
+
+The master is 1080p60 (H.264, AAC, -16 LUFS integrated, -1 dBTP) with 13 chapter
+markers and a soft English subtitle track; the same subtitles are written alongside as `.srt`.
 
 ## Credits
 
