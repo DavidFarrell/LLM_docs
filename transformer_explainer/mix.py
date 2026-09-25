@@ -100,6 +100,13 @@ def main():
         t += d
     total = t
     print(f"total {total:.2f}s ({total / 60:.2f} min)")
+    titles = ["Intro: what does 'it' mean?", "01 Why not recurrence?", "02 Words as vectors", "03 Query, key, value",
+              "04 Self-attention", "05 Why three projections?", "06 The equation", "07 Multi-head attention",
+              "08 Word order", "09 Into the network", "10 The decoder", "11 Impact", "12 Recap"]
+    with open(os.path.join(BUILD, "chapters.txt"), "w") as f:
+        f.write(";FFMETADATA1\ntitle=Attention Is All You Need - explained\n")
+        for title, off, d in zip(titles, offsets, durs):
+            f.write(f"\n[CHAPTER]\nTIMEBASE=1/1000\nSTART={int(off * 1000)}\nEND={int((off + d) * 1000)}\ntitle={title}\n")
     with open(os.path.join(BUILD, "concat.txt"), "w") as f:
         for v in vids:
             f.write(f"file '{v}'\n")
@@ -150,6 +157,11 @@ def main():
         g = 10 ** ((TARGET_LUFS - loud) / 20)
         print(f"  {name:6s} LUFS {meter.integrated_loudness(bus * g):6.1f}")
     sf.write(os.path.join(BUILD, "mix.wav"), mix[: int(total * SR)].astype(np.float32), SR, subtype="FLOAT")
+    if os.environ.get("STEMS"):
+        os.makedirs(os.path.join(BUILD, "stems"), exist_ok=True)
+        g = 10 ** ((TARGET_LUFS - loud) / 20)
+        for name, bus in (("vo", vo), ("sfx", fx), ("music", mus * 10 ** (MUSIC_DB / 20) * duck[:, None])):
+            sf.write(os.path.join(BUILD, "stems", f"{name}.wav"), (bus[: int(total * SR)] * g).astype(np.float32), SR)
 
     # subtitles: split each narration clip into short cues
     phrases = [("twenty seventeen", "2017"), ("five hundred and twelve", "512"),

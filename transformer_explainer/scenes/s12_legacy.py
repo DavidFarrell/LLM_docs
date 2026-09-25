@@ -62,7 +62,7 @@ class S12_Legacy(TScene):
             gap = VGroup(DashedLine([ya[0], ya[1], 0], [ya[0], yb[1], 0], dash_length=0.06).set_stroke(GOOD, 2),
                          Line([ya[0], yb[1], 0], [yb[0], yb[1], 0]).set_stroke(GOOD, 3))
             plus = VGroup(txt("+2.0 BLEU", 30, GOOD, weight="BOLD"), txt("over the best ensemble", 22, GOOD)).arrange(DOWN, buff=0.08)
-            plus.move_to([4.75, 0.6, 0])
+            plus.move_to([4.75, 1.25, 0])
             self.sfx("ding", -8)
             self.play(Create(gap), FadeIn(plus, shift=LEFT * 0.1), run_time=0.8)
             b.wait_until("days", lead=0.2)
@@ -70,7 +70,7 @@ class S12_Legacy(TScene):
                             .set_stroke(GOOD, 1.5) for _ in range(8)]).arrange(RIGHT, buff=0.08)
             days = VGroup(gpus, txt("3.5 days on 8 GPUs", 24, INK, weight="SEMIBOLD")).arrange(RIGHT, buff=0.3)
             days = VGroup(gpus, txt("3.5 days on 8 GPUs", 24, INK, weight="SEMIBOLD")).arrange(DOWN, buff=0.2)
-            days.move_to([4.75, -1.2, 0])
+            days.move_to([4.75, -0.45, 0])
             cheap = VGroup(txt("a fraction of the", 22, INK2), txt("previous training cost", 22, INK2)).arrange(DOWN, buff=0.06)
             cheap.next_to(days, DOWN, buff=0.15)
             self.play(LaggedStart(*[FadeIn(g, scale=0.6) for g in gpus], lag_ratio=0.06), FadeIn(days[1]), run_time=0.8)

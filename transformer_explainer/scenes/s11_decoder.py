@@ -151,7 +151,7 @@ class S11_Decoder(TScene):
             self.sfx("whoosh_soft", -9)
             self.play(FadeOut(qb), LaggedStart(*[Create(l) for l in lines], lag_ratio=0.05), run_time=0.7)
             flows = VGroup(*[kv[1].copy().set_opacity(0.2 + 0.8 * wi) for kv, wi in zip(kvs, w)])
-            katze = Chip("Katze", size=26, color=INK).move_to(de_row[2])
+            katze = Chip("Katze", size=26, color=INK).next_to(de_row[1], RIGHT, buff=0.3)
             self.play(*[f.animate.move_to(qv).scale(0.5).set_opacity(0) for f in flows], en2[1].box.animate.set_stroke(K_C, 2.8),
                       run_time=0.8)
             self.remove(flows)
@@ -173,8 +173,8 @@ class S11_Decoder(TScene):
             stack = VGroup(m1, a1, m2, a2, ff, a3).arrange(UP, buff=0.14).move_to([dx, -0.35, 0])
             for blk in (m1, m2, a1, a2, a3):
                 blk.rect.set_fill(opacity=0.22)
-            from_enc = Arrow(m2.get_left() + LEFT * 1.3, m2.get_left(), buff=0.05, stroke_width=3).set_color(K_C)
-            fe_l = txt("from encoder", 18, K_C).next_to(from_enc, UP, buff=0.05)
+            from_enc = Arrow(m2.get_left() + LEFT * 1.4, m2.get_left(), buff=0.05, stroke_width=3).set_color(K_C)
+            fe_l = txt("from encoder", 20, K_C).next_to(from_enc, UP, buff=0.12).align_to(from_enc, LEFT)
             self.play(FadeIn(m1, shift=UP * 0.1), FadeIn(m2, shift=UP * 0.1), GrowArrow(from_enc), FadeIn(fe_l), run_time=0.3)
             self.play(FadeIn(ff, shift=UP * 0.1), run_time=0.4)
             b.wait_until("an", lead=0.2)
